@@ -1,0 +1,71 @@
+<p-toast />
+
+<!--menu-->
+
+    <div class="contenedor2">
+        <app-header></app-header>
+    </div>
+
+    <!--routerLink="book-form/new"-->
+    <div class="contenedor4">
+        <div class="main">
+            <h1>TiendaOnline</h1>
+            <h3>Crear Producto</h3>
+
+            <form [formGroup]="productoForm" (ngSubmit)="edit ? updateProducto() : createProducto()">
+
+                <label for="first">
+                    Nombre:
+                </label>
+                <input pInputText formControlName="_NombreProducto" type="text" placeholder="nombre producto" required>
+
+                <label for="first">
+                    Marca:
+                </label>
+                <input pInputText formControlName="_MarcaProducto" type="text" placeholder="marca" required>
+
+                <label for="first">
+                    Modelo:
+                </label>
+                <input pInputText formControlName="_ModeloProducto" type="text" placeholder="Modelo" required>
+
+                <label for="first">
+                    Color:
+                </label>
+                <input pInputText formControlName="_ColorProducto" type="text" placeholder="Color" required>
+
+                <label for="first">
+                    Talla:
+                </label>
+                <p-inputNumber formControlName="_TallaProducto" type="number" placeholder="talla" required />
+
+                <label for="first">
+                    Descripción:
+                </label>
+                <input pInputText formControlName="_DescripcionProducto" type="text" placeholder="descripcion" required>
+
+                <div class="wrap">
+                    <div class="flex gap-2">
+                        <p-button label="Guardar" [loading]="isSaveInProgress" type="submit" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!---footer-->
+    <div class="contenedor3">
+        <app-footer></app-footer>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
