@@ -6,9 +6,7 @@
             <ng-template pTemplate="header">
                 <img alt="Card" [src]= "prod.image?prod.image.imageUrl:'assets/imagen/camarosen.jpg'" />
             </ng-template>
-            <p>
-                Descripcion: {{prod._DescripcionProducto}}
-            </p>
+          
             <p>
                 SKU:{{prod._IdProducto}}
             </p>
@@ -17,6 +15,9 @@
             </p>
             <p>
                 Marca: {{prod._MarcaProducto}}
+            </p>
+            <p>
+                Descripcion: {{prod._DescripcionProducto}}
             </p>
             <ng-template pTemplate="footer">
                 <div class="flex gap-3 mt-1">
