@@ -1,6 +1,6 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterModule, Router} from '@angular/router';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { ProductoService } from '../../core/services/producto.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 import { ToastModule } from "primeng/toast"
+import { FileSelectEvent } from 'primeng/fileupload';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 
@@ -26,7 +28,8 @@ import { ToastModule } from "primeng/toast"
     FooterComponent,
     ToastModule,
     InputNumberModule,
-    InputTextModule],
+    InputTextModule,
+    FileUploadModule],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.css'
 })
@@ -37,7 +40,7 @@ export default class ModalComponent {
   edit: boolean = false;
   selectedFile: File | null = null;
   _idProducto: number = 0
-  
+
 
 
   constructor(
@@ -54,7 +57,8 @@ export default class ModalComponent {
       _ModeloProducto: ['', Validators.required],
       _MarcaProducto: ['', Validators.required],
       _ColorProducto: ['', Validators.required],
-      _TallaProducto: [1, [Validators.required, Validators.min(1)]]
+      _TallaProducto: [1, [Validators.required, Validators.min(1)]],
+      image: [null]
     });
 
   }
@@ -67,12 +71,16 @@ export default class ModalComponent {
     }
   }
 
-  
+  onFileSelected(event: FileSelectEvent) {
+    this.selectedFile = event.files[0];
+  }
+
+
   //traer el producto por ID
   getProductById(_IdProducto: number) {
     // Retrieve the token from localStorage (or wherever it's stored)
     const token = localStorage.getItem('authToken');
-  
+
     if (!token) {
       this.messageService.add({
         severity: 'error',
@@ -82,7 +90,7 @@ export default class ModalComponent {
       this.router.navigateByUrl('/');  // Navigate to another route if the token is missing
       return;
     }
-  
+
     // Call the service to get the product by ID, passing the token in the headers
     this.productservice.getProductoById(_IdProducto, token).subscribe({
       next: (foundProducto) => {
@@ -105,12 +113,6 @@ export default class ModalComponent {
 
 
 
-
-
-
-
-
-
   //metodo crea producto
   createProducto() {
 
@@ -119,6 +121,15 @@ export default class ModalComponent {
         severity: 'error',
         summary: 'Error',
         detail: 'Revise los campos e intente nuevamente',
+      });
+      return;
+    }
+
+    if (!this.selectedFile) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Seleccione una imagen e intente nuevamente',
       });
       return;
     }
@@ -139,7 +150,7 @@ export default class ModalComponent {
     }
 
     // Call the service to create the product, passing the token in the headers
-    this.productservice.createProducto(this.productoForm.value, token).subscribe({
+    this.productservice.createProducto(this.productoForm.value, token, this.selectedFile).subscribe({
       next: () => {
         this.messageService.add({
           severity: 'success',
@@ -169,6 +180,37 @@ export default class ModalComponent {
 
 
 
+//cargar imagen
+  changeImage(event: FileSelectEvent) {
+    this.selectedFile = event.files[0];
+    if (!this.selectedFile) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Seleccione una imagen e intente nuevamente',
+      });
+      return;
+    }
+    this.productservice.updateProductoImage(this.productoForm.value.id, this.selectedFile).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Guardado',
+          detail: 'Producto actualizado correctamente',
+        });
+        this.isSaveInProgress = false;
+        this.router.navigateByUrl('/');
+      },
+      error: () => {
+        this.isSaveInProgress = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Revise el archivo seleccionado',
+        });
+      },
+    });
+  }
 
 
 
@@ -176,7 +218,9 @@ export default class ModalComponent {
 
 
 
-//Actualizar producto
+
+
+  //Actualizar producto
   updateProducto() {
     if (this.productoForm.invalid) {
       this.messageService.add({
@@ -187,10 +231,10 @@ export default class ModalComponent {
       return;
     }
     this.isSaveInProgress = true;
-  
+
     // Retrieve the token from localStorage (or wherever it is securely stored)
     const token = localStorage.getItem('authToken');
-  
+
     if (!token) {
       this.messageService.add({
         severity: 'error',
@@ -200,7 +244,7 @@ export default class ModalComponent {
       this.isSaveInProgress = false;
       return;
     }
-  
+
     // Call the service to update the product, passing the token in the headers
     this.productservice.updateProducto(this.productoForm.value._IdProducto, this.productoForm.value, token).subscribe({
       next: () => {

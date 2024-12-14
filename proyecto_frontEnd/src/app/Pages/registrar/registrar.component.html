@@ -6,7 +6,7 @@
 	<h1>TiendaOnline</h1>
 	<h3>Registrarse</h3>
 
-	<form  [formGroup]="userForm" (ngSubmit)="createUsuario()">
+	<form  [formGroup]="userForm">
 		<label for="first">
 			email:
 		</label>
@@ -24,7 +24,7 @@
 			required>
 
 		<div class="wrap">
-			<button  type="submit">Registrarse</button>
+			<button (click)="createUsuario()" type="submit">Registrarse</button>
 		</div>
 	</form>
 </div>

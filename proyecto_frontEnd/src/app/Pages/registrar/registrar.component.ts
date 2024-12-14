@@ -59,19 +59,29 @@ export default class RegistrarComponent {
 
   createUsuario() {
     if (this.userForm.invalid) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Revise los campos e intente nuevamente', });
+      this.messageService.add({ 
+        severity: 'error', 
+        summary: 'Error', 
+        detail: 'Revise los campos e intente nuevamente', });
       return;
     }
     this.isSaveInProgress = true;
 
     this.usuarioservice.createUsuario(this.userForm.value).subscribe({
       next: () => {
-        this.messageService.add({ severity: 'success', summary: 'Guardado', detail: 'usuario guardado correctamente' });
+        this.messageService.add({ 
+          severity: 'success', 
+          summary: 'Guardado', 
+          detail: 'usuario guardado correctamente' });
         this.isSaveInProgress = false;
       },
+
       error: () => {
         this.isSaveInProgress = false;
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Revise los campos e intente nuevamente' });
+        this.messageService.add({ 
+          severity: 'error', 
+          summary: 'Error', 
+          detail: 'Revise los campos e intente nuevamente' });
       },
     });
   }

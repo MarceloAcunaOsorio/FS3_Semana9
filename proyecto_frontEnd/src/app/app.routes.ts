@@ -4,6 +4,7 @@ import { authenticatedGuard } from './core/guards/authenticated.guard';
 
 export const routes: Routes = [
 
+  
    
    {
       path: '',

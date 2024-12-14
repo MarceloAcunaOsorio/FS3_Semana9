@@ -20,39 +20,45 @@ export class ProductoService {
 
 
   //id del producto
-    // Modify getProductoById to accept token
-    getProductoById(_IdProducto: number, token: string): Observable<any> {
-      // Set up the HTTP headers with the token
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
-      // Send the GET request with the headers
-      return this.http.get(`${this.apiUrl}/detalle/${_IdProducto}`, { headers });
-    }
-  
-  /*getProductoById(_idProducto: number): Observable<producto> {
-    return this.http.get<producto>(`${this.apiUrl}/${_idProducto}`);
-  }*/
+  // Modify getProductoById to accept token
+  getProductoById(_IdProducto: number, token: string): Observable<any> {
+    // Set up the HTTP headers with the token
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    // Send the GET request with the headers
+    return this.http.get(`${this.apiUrl}/detalle/${_IdProducto}`, { headers });
+  }
+
+
+
 
 
   //crear producto
 
-  createProducto(producto: any, token: string): Observable<any> {
+  createProducto(producto: any, token: string, image: File): Observable<any> {
+
+    const formData = new FormData();
+    formData.append('producto', new Blob([JSON.stringify(producto)], { type: 'application/json' }));
+    formData.append('file', image);
+
+
     // Set up the HTTP headers with the token
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
+    formData.forEach((value, key) => {
+      console.log(`${key}:`, value); // Debugging
+    });
+
     // Send the POST request with the headers
-    return this.http.post(`${this.apiUrl}/crear`, producto, { headers });
+    return this.http.post(`${this.apiUrl}/crear`, formData, { headers });
   }
 
-/*
-  createProducto(producto: producto): Observable<producto> {
+  //actualiza imagen
+  updateProductoImage(id: number, image: File): Observable<producto> {
     const formData = new FormData()
-    formData.append(`producto`, new Blob([JSON.stringify(producto)], { type: 'application/json' }));
-
-    console.log('Datos en el servicio:', producto);
-    return this.http.post<producto>(this.apUrl, producto)
-  }*/
-
+    formData.append('file', image)
+    return this.http.put<producto>(`${this.apiUrl}/${id}/image`, formData);
+  }
 
 
 
@@ -67,11 +73,7 @@ export class ProductoService {
     // Send the PUT request with the headers
     return this.http.put(`${this.apiUrl}/actualizar/${_idProducto}`, producto, { headers });
   }
-  
-  /*private apUrls = 'http://localhost:8085/admin/actualizar'
-  updateProducto(producto: producto) {
-    return this.http.put(this.apUrls, producto)
-  }*/
+
 
 
 
@@ -80,7 +82,7 @@ export class ProductoService {
 
   //eliminar producto
 
-  deleteProducto(_idProducto: number,token: string):Observable<any> {
+  deleteProducto(_idProducto: number, token: string): Observable<any> {
 
     // Set up the HTTP headers with the token
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -88,8 +90,5 @@ export class ProductoService {
     // Send the DELETE request with the headers
     return this.http.delete(`${this.apiUrl}/eliminar/${_idProducto}`, { headers });
   }
-  /*private apUr = 'http://localhost:8085/admin/eliminar'
-  deleteProducto(_idProducto: number) {
-    return this.http.delete<producto>(`${this.apUr}/${_idProducto}`);
-  }*/
+
 }
