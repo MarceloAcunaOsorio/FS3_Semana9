@@ -1,0 +1,14 @@
+node_modules
+.git
+.gitignore
+dist
+.vscode
+.angular
+*.log
+**/node_modules/
+**/dist
+npm-debug.log
+.coverage
+.coverage.*
+.env
+.aws
