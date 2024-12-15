@@ -19,7 +19,7 @@ return this.http.post<usuario>(this.ApiUrl, usuario)
 
 
 
-  //crear producto
+  //crear usuario
   createUsuario(usuario: usuario): Observable<usuario> {
     const formData = new FormData()
     formData.append(`usuario`, new Blob([JSON.stringify(usuario)], { type: 'application/json' }));

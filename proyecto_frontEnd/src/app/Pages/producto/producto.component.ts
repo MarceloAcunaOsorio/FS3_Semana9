@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { producto } from '../../models/producto';
@@ -20,7 +20,7 @@ export class ProductoComponent {
 
   producto: producto[] = []
 
-  constructor(private productoService: ProductoService){}
+  constructor(private readonly productoService: ProductoService){}
 
  ngOnInit():void{
   this.getAllProductos();

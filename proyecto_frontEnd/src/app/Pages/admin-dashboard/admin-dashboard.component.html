@@ -1,0 +1,51 @@
+<p-toast />
+<!--header-->
+
+<div class="contenedor2">
+  <app-header></app-header>
+</div>
+
+
+<div class="contenedor1">
+  <a routerLink="/modal/new" class="p-button font-bold w-max">Crear Producto</a>
+</div>
+<div class="contenedor4">
+  <table>
+    <caption>Listado de Productos</caption>
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Color</th>
+        <th scope="col">Talla</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (prod of producto; track prod._IdProducto){
+      <tr>
+        <td data-label="ID">{{prod._IdProducto}}</td>
+        <td data-label="Nombre">{{prod._NombreProducto}}</td>
+        <td data-label="Marca">{{prod._MarcaProducto}}</td>
+        <td data-label="Modelo">{{prod._ModeloProducto}}</td>
+        <td data-label="Color">{{prod._ColorProducto}}</td>
+        <td data-label="Talla">{{prod._TallaProducto}}</td>
+        <td data-label="Descripcion">{{prod._DescripcionProducto}}</td>
+        <td data-label="Editar"><button class="button1" routerLink="/modal/{{prod._IdProducto}}">Editar</button></td>
+        <td data-label="Eliminar"><button class="button2" (click)="eliminarProducto(prod._IdProducto)">Eliminar</button></td>
+      </tr>
+      }@empty {<p>No existen Productos</p>}
+    </tbody>
+  </table>
+</div>
+
+
+
+<!---footer-->
+<div class="contenedor3">
+  <app-footer></app-footer>
+</div>

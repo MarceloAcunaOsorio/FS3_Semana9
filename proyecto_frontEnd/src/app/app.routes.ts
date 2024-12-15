@@ -4,29 +4,23 @@ import { authenticatedGuard } from './core/guards/authenticated.guard';
 
 export const routes: Routes = [
 
-  
-   
    {
-      path: '',
-      loadComponent: () => import('./Pages/layout/layout.component'),
+      path: 'admin-dashboard',
+      loadComponent: () => import('./Pages/admin-dashboard/admin-dashboard.component'),
       canActivate: [AuthGuard],
-      children: [
-         {
-            path: 'dashboard',
-            loadComponent: () => import('./Pages/dashboard/dashboard.component'),
-            canActivate: [AuthGuard],
-         },
-       
-         {
-            path: '',
-            redirectTo: 'dashboard',
-            pathMatch: 'full'
-         }
-      ]
+      data: { roles: ['ADMIN'] } // Solo los administradores pueden acceder
    },
    {
+      path: 'user-dashboard',
+      loadComponent: () => import('./Pages/user-dashboard/user-dashboard.component'),
+      canActivate: [AuthGuard],
+      data: { roles: ['USER'] } // Solo los usuarios pueden acceder
+   },
+
+
+   {
       path: 'modal/:_IdProducto',
-      loadComponent:()=> import('./Pages/modal/modal.component'),
+      loadComponent: () => import('./Pages/modal/modal.component'),
       canActivate: [AuthGuard],
    },
 
@@ -46,8 +40,7 @@ export const routes: Routes = [
    },
    {
       path: '**',
-      redirectTo: 'home',
-      pathMatch: 'full'
+      redirectTo: '/home',
    }
 
 ];

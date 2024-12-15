@@ -9,7 +9,7 @@
             <input type="checkbox" id="check"/>
             <span class="menu">
                 <li><a routerLink="/home">Home</a></li>
-                <li><a *ngIf="tokenExists" routerLink="">Productos</a></li>
+                <li><a *ngIf="tokenExists" (click)="redirectToDashboard()">Menu</a></li>
                 <li><a *ngIf="!tokenExists" routerLink="/Registrar">Registrarse</a></li>
                 <li><a *ngIf="!userLoginOn && !tokenExists" routerLink="/login">Login</a></li>
                 <li><a *ngIf="tokenExists" (click)="logout()">Cerrar Sesion</a></li>
