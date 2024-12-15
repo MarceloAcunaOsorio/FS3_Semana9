@@ -12,6 +12,6 @@ COPY target/nuevo-proyecto-1.0-SNAPSHOT.jar app.jar
 COPY ./Wallet_QMX8X1I4LTY0NIR1 /app/Wallet_tienda
 
 #PUERTO
-EXPOSE 8085
+EXPOSE 8083
 
 CMD ["java", "-jar", "app.jar"]
