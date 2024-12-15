@@ -7,8 +7,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 
-export class roleGuard implements CanActivate{
-  constructor(private authService: AuthService, private router: Router) {}
+export class RoleGuard implements CanActivate{
+  constructor(private readonly authService: AuthService, private readonly router: Router) {}
   
   
 

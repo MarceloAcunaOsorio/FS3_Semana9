@@ -2,5 +2,5 @@ projectKey=A123
 serverUrl=http://localhost:9000
 serverVersion=24.12.0.100206
 dashboardUrl=http://localhost:9000/dashboard?id=A123
-ceTaskId=753e5769-5ed4-4815-9971-27e2e283c2e4
-ceTaskUrl=http://localhost:9000/api/ce/task?id=753e5769-5ed4-4815-9971-27e2e283c2e4
+ceTaskId=ad5b09ba-d237-46a6-8a4a-3225b67f7c23
+ceTaskUrl=http://localhost:9000/api/ce/task?id=ad5b09ba-d237-46a6-8a4a-3225b67f7c23

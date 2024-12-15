@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { producto } from '../../models/producto';
 
@@ -8,12 +8,12 @@ import { producto } from '../../models/producto';
 })
 export class ProductoService {
 
-  private apiUrl = 'http://localhost:8083/api/productos';
+  private readonly apiUrl = 'http://localhost:8083/api/productos';
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   //listar producto
-  private apUrl = 'http://localhost:8083/api/home';
+  private readonly apUrl = 'http://localhost:8083/api/home';
   getProducto(): Observable<producto[]> {
     return this.http.get<producto[]>(`${this.apUrl}`)
   }

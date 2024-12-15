@@ -13,7 +13,7 @@ import { AuthService } from './core/services/auth.service';
 export class AppComponent implements OnInit {
   title = 'proyecto_frontEnd';
 
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   ngOnInit(): void {
     this.authService.isAuthenticated()
