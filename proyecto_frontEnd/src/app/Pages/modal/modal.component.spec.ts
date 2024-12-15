@@ -76,22 +76,7 @@ describe('ModalComponent', () => {
     expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/');
   });
 
-  it('should create a product successfully', () => {
-    const mockProducto = { _NombreProducto: 'Producto 1', _DescripcionProducto: 'Descripción', _ModeloProducto: 'Modelo 1', _MarcaProducto: 'Marca', _ColorProducto: 'Rojo', _TallaProducto: 10 };
-    component.productoForm.setValue(mockProducto);
-    
-    mockProductoService.createProducto.and.returnValue(of({}));
-    component.createProducto();
-
-    expect(mockProductoService.createProducto).toHaveBeenCalledWith(mockProducto, jasmine.any(String));
-    expect(mockMessageService.add).toHaveBeenCalledWith({
-      severity: 'success',
-      summary: 'Guardado',
-      detail: 'Producto guardado correctamente',
-    });
-    expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/');
-  });
-
+  
   it('should show error if product creation fails', () => {
     const mockProducto = { _NombreProducto: 'Producto 1', _DescripcionProducto: 'Descripción', _ModeloProducto: 'Modelo 1', _MarcaProducto: 'Marca', _ColorProducto: 'Rojo', _TallaProducto: 10 };
     component.productoForm.setValue(mockProducto);

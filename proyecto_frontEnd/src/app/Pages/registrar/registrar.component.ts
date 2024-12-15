@@ -36,6 +36,7 @@ export default class RegistrarComponent {
   
   userForm! : FormGroup;
   isSaveInProgress: boolean = false;
+
   
 
   constructor(
@@ -46,9 +47,9 @@ export default class RegistrarComponent {
   ) {
     this.userForm = this.fb.group({
        id: [null],
-       email: ['', Validators.required],
-       password: ['', Validators.required],
-       username: ['', Validators.required],
+       email: ['', [Validators.required,Validators.email]],
+       password: ['', [Validators.required,Validators.minLength(4)]],
+       username: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
 

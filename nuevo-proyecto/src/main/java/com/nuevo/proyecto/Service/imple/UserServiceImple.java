@@ -31,7 +31,7 @@ import com.nuevo.proyecto.security.JwtGenerator;
 @Service
 public class UserServiceImple implements UserService{
     
-     @Autowired
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private RolService rolService;

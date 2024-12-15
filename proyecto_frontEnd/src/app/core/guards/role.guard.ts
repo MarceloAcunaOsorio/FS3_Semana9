@@ -1,7 +1,7 @@
 import { CanActivate,Router,ActivatedRouteSnapshot,RouterStateSnapshot} from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root',
@@ -15,18 +15,15 @@ export class roleGuard implements CanActivate{
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean | Observable<boolean> | Promise<boolean> {
-    const expectedRoles = route.data['roles'] || []; // Garantiza que sea un array vacío si está indefinido
-    const userRole = this.authService.getUserRole() || ''; // Garantiza que sea un string vacío si está indefinido
-  
-    console.log('Expected Roles:', expectedRoles);
-    console.log('User Role:', userRole);
+  ): boolean {
+    const requiredRoles = route.data['roles']; // Roles requeridos desde el data de la ruta
+    const userRoles = this.authService.getUserRole(); // Roles del usuario
 
-    if (Array.isArray(expectedRoles) && expectedRoles.includes(userRole)) {
-      return true; // El usuario tiene el rol adecuado
+    if (Array.isArray(userRoles) && requiredRoles.some((role: any) => userRoles.includes(role))) {
+      return true; // El usuario tiene al menos uno de los roles requeridos
     }
-  
-    // Redirigir si no tiene el rol adecuado
+
+    // Si no tiene permiso, redirige a una página de error o inicio
     this.router.navigate(['/home']);
     return false;
   }

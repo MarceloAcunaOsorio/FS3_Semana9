@@ -1,19 +1,20 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { authenticatedGuard } from './core/guards/authenticated.guard';
+import { roleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
 
    {
       path: 'admin-dashboard',
       loadComponent: () => import('./Pages/admin-dashboard/admin-dashboard.component'),
-      canActivate: [AuthGuard],
+      canActivate: [AuthGuard,roleGuard],
       data: { roles: ['ADMIN'] } // Solo los administradores pueden acceder
    },
    {
       path: 'user-dashboard',
       loadComponent: () => import('./Pages/user-dashboard/user-dashboard.component'),
-      canActivate: [AuthGuard],
+      canActivate: [AuthGuard,roleGuard],
       data: { roles: ['USER'] } // Solo los usuarios pueden acceder
    },
 
